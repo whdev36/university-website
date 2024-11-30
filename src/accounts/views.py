@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 # Register
 def register_user(request):
@@ -42,3 +42,9 @@ def login_user(request):
         else:
             messages.error(request, 'Invalid username or password!')
     return render(request, 'accounts/login.html', {})
+
+# Logout
+def logout_user(request):
+    logout(request)
+    messages.success(request, 'You have been logged out!')
+    return redirect('home')
