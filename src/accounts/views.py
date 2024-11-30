@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+# from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.contrib import messages
@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 
 # Register
 def register_user(request):
+    # TODO: Create a custom register form
     # return HttpResponse('Register')
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -18,7 +19,7 @@ def register_user(request):
             return redirect('login') # Redirect to login
         else:
             messages.warning(request, 'Something went wrong.')
-            return redirect('home')
+            # return redirect('home')
     else:
         form = UserCreationForm()
     return render(request, 'accounts/register.html', {'form': form})
@@ -31,6 +32,7 @@ def users(request):
 
 # Login
 def login_user(request):
+    # TODO: Create a custom login form
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -52,6 +54,7 @@ def logout_user(request):
 # Update
 @login_required
 def update_user(request):
+    # TODO: Create a custom update form
     user = request.user
     if request.method == 'POST':
         form = UserChangeForm(request.POST, instance=user)
@@ -64,3 +67,13 @@ def update_user(request):
     else:
         form = UserChangeForm(instance=user)
     return render(request, 'accounts/update.html', {'form': form})
+
+# Delete
+@login_required
+def delete_user(request):
+    user = request.user
+    if request.method == 'POST':
+        user.delete()
+        messages.success(request, 'Your account has been deleted successfully.')
+        return redirect('home')
+    return render(request, 'accounts/delete.html', {})
