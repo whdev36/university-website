@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth import authenticate, login
 
 # Register
 def register_user(request):
@@ -14,7 +15,7 @@ def register_user(request):
             form.save()
             username = form.cleaned_data.get('username') # Get username data
             messages.success(request, f'Account created for {username}!')
-            return redirect('home')
+            return redirect('login') # Redirect to login
         else:
             messages.warning(request, 'Something went wrong.')
             return redirect('home')
@@ -27,3 +28,17 @@ def register_user(request):
 def users(request):
     users = User.objects.all() # Get all users
     return render(request, 'accounts/users.html', {'users': users})
+
+# Login
+def login_user(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None: # Check user
+            login(request, user)
+            messages.success(request, 'Login successfully!')
+            return redirect('home')
+        else:
+            messages.error(request, 'Invalid username or password!')
+    return render(request, 'accounts/login.html', {})
