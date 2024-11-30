@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.contrib import messages
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth import authenticate, login, logout
 
 # Register
@@ -48,3 +48,19 @@ def logout_user(request):
     logout(request)
     messages.success(request, 'You have been logged out!')
     return redirect('home')
+
+# Update
+@login_required
+def update_user(request):
+    user = request.user
+    if request.method == 'POST':
+        form = UserChangeForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been updated!')
+            return redirect('home') # TODO: Go to profile
+        else:
+            messages.warning(request, 'Something went wrong.')
+    else:
+        form = UserChangeForm(instance=user)
+    return render(request, 'accounts/update.html', {'form': form})
