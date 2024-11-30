@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import NewForm
+from .models import New
 
 # Homepage
 def home(request):
@@ -19,3 +20,8 @@ def create_new(request):
     else:
         form = NewForm()
     return render(request, 'new-form.html', {'form': form})
+
+# All news page
+def news(request):
+    news = New.objects.all()
+    return render(request, 'news.html', {'news': news})

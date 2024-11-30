@@ -18,7 +18,7 @@ class Category(models.Model):
 
 # News
 # TODO: Change to "New"
-class News(models.Model):
+class New(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
