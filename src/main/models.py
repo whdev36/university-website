@@ -17,6 +17,7 @@ class Category(models.Model):
         return self.name
 
 # News
+# TODO: Change to "New"
 class News(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
