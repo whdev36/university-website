@@ -19,9 +19,22 @@ def create_new(request):
             return redirect('home') # Change to "news"
     else:
         form = NewForm()
-    return render(request, 'new-form.html', {'form': form})
+    return render(request, 'create-new.html', {'form': form})
 
 # All news page
 def news(request):
     news = New.objects.all()
     return render(request, 'news.html', {'news': news})
+
+# New update view
+def update_new(request, pk):
+    new = New.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = NewForm(request.POST, instance=new)
+        if form.is_valid():
+            form.save()
+            # return redirect('new', pk=new.pk)
+            return redirect('news')
+    else:
+        form = NewForm(instance=new)
+    return render(request, 'update-new.html', {'form': form})

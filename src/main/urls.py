@@ -5,4 +5,5 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('create-new/', views.create_new, name='create-new'),
     path('news/', views.news, name='news'),
+    path('update-new/<int:pk>/', views.update_new, name='update-new'),
 ]
