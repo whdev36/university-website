@@ -38,3 +38,13 @@ def update_new(request, pk):
     else:
         form = NewForm(instance=new)
     return render(request, 'update-new.html', {'form': form})
+
+# New delete view
+def delete_new(request, pk):
+    new = New.objects.get(pk=pk)
+    if request.method == 'POST':
+        new.delete()
+        messages.success(request, 'New deleted successfully!')
+        return redirect('news')
+    return render(request, 'delete-new.html', {'new': new})
+
