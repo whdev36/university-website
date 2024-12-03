@@ -14,10 +14,10 @@ def register_user(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username') # Get username data
-            messages.success(request, f'Account created successfully!')
+            messages.success(request, 'Your account has been successfully created. Welcome!')
             return redirect('login') # Redirect to login
         else:
-            messages.warning(request, 'Something went wrong.')
+            messages.warning(request, 'Registration failed. Please check the details and try again.')
     else:
         form = RegisterForm()
     return render(request, 'accounts/register.html', {'form': form})
@@ -37,17 +37,21 @@ def login_user(request):
         user = authenticate(username=username, password=password)
         if user is not None: # Check user
             login(request, user)
-            messages.success(request, 'Login successfully!')
+            messages.success(request, 'Welcome back! You have logged in successfully.')
             return redirect('home')
         else:
-            messages.error(request, 'Invalid username or password!')
+            messages.warning(request, 'Login failed. Please check your username and password.')
     return render(request, 'accounts/login.html', {})
 
 # Logout
 def logout_user(request):
-    logout(request)
-    messages.success(request, 'You have been logged out!')
-    return redirect('home')
+    if request.user.is_authenticated:
+        logout(request)
+        messages.success(request, 'You have logged out successfully. See you next time!')
+        return redirect('home')
+    else:
+        messages.warning(request, 'Logout failed. Please try again.')
+        return redirect('home')
 
 # Update
 @login_required
@@ -59,10 +63,10 @@ def update_user(request):
         form = RegisterForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Your profile has been updated!')
+            messages.success(request, 'Your profile has been updated successfully.')
             return redirect('home') # TODO: Go to profile
         else:
-            messages.warning(request, 'Something went wrong.')
+            messages.warning(request, 'Failed to update your profile. Please try again.')
     else:
         # form = UserChangeForm(instance=user)
         form = RegisterForm(instance=user)
@@ -74,6 +78,6 @@ def delete_user(request):
     user = request.user
     if request.method == 'POST':
         user.delete()
-        messages.success(request, 'Your account has been deleted successfully.')
+        messages.success(request, 'Your account has been successfully deleted. We\'re sorry to see you go.')
         return redirect('home')
     return render(request, 'accounts/delete.html', {})
