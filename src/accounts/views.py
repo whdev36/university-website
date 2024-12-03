@@ -56,10 +56,8 @@ def logout_user(request):
 # Update
 @login_required
 def update_user(request):
-    # TODO: Create a custom update form
     user = request.user
     if request.method == 'POST':
-        # form = UserChangeForm(request.POST, instance=user)
         form = RegisterForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
@@ -68,7 +66,6 @@ def update_user(request):
         else:
             messages.warning(request, 'Failed to update your profile. Please try again.')
     else:
-        # form = UserChangeForm(instance=user)
         form = RegisterForm(instance=user)
     return render(request, 'accounts/update.html', {'form': form})
 
