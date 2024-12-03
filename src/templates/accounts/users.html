@@ -5,10 +5,10 @@
 {% block content %}
     <h1>Users</h1>
     {% if users %}
-        <ul>
+        <div class="list-group">
             {% for user in users %}
-                <li><a href="#">{{ user.username }}</a></li>
+                <a class="list-group-item list-group-item-action" href="#">{{ user.username }}</a>
             {% endfor %}
-        </ul>
+        </div>
     {% endif %}
 {% endblock %}
