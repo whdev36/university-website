@@ -5,23 +5,21 @@ from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth import authenticate, login, logout
+from .forms import RegisterForm
 
 # Register
 def register_user(request):
-    # TODO: Create a custom register form
-    # return HttpResponse('Register')
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username') # Get username data
-            messages.success(request, f'Account created for {username}!')
+            messages.success(request, f'Account created successfully!')
             return redirect('login') # Redirect to login
         else:
             messages.warning(request, 'Something went wrong.')
-            # return redirect('home')
     else:
-        form = UserCreationForm()
+        form = RegisterForm()
     return render(request, 'accounts/register.html', {'form': form})
 
 # Users
