@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import NewForm
+from .forms import NewForm, CategoryForm
 from .models import New
 
 # Homepage
@@ -47,4 +47,18 @@ def delete_new(request, pk):
         messages.success(request, 'New deleted successfully!')
         return redirect('news')
     return render(request, 'delete-new.html', {'new': new})
+
+# Create category creation view for CategoryForm
+def create_category(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'The category has been successfully created.')
+            return redirect('home') # TODO: Redirect to categories list
+        else:
+            messages.warning(request, 'The category has been successfully created.')
+    else:
+        form = CategoryForm()
+    return render(request, 'create-category.html', {'form': form})
 

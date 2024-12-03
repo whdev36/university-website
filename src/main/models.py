@@ -5,6 +5,9 @@ from django.utils.text import slugify
 
 # Category
 class Category(models.Model):
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, blank=True, null=True)
 
@@ -16,8 +19,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-# News
-# TODO: Change to "New"
+# New
 class New(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
