@@ -55,7 +55,8 @@ def update_user(request):
     # TODO: Create a custom update form
     user = request.user
     if request.method == 'POST':
-        form = UserChangeForm(request.POST, instance=user)
+        # form = UserChangeForm(request.POST, instance=user)
+        form = RegisterForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
             messages.success(request, 'Your profile has been updated!')
@@ -63,7 +64,8 @@ def update_user(request):
         else:
             messages.warning(request, 'Something went wrong.')
     else:
-        form = UserChangeForm(instance=user)
+        # form = UserChangeForm(instance=user)
+        form = RegisterForm(instance=user)
     return render(request, 'accounts/update.html', {'form': form})
 
 # Delete
