@@ -81,3 +81,12 @@ def update_category(request, pk):
     else:
         form = CategoryForm(instance=category)
     return render(request, 'update-category.html', {'form': form})
+
+# Create delete category view
+def delete_category(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    if request.method == 'POST':
+        category.delete()
+        messages.success(request, 'The category has been successfully deleted.')
+        return redirect('categories')
+    return render(request, 'delete-category.html')

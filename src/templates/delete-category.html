@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Category Form{% endblock %}
+
+{% block content %}
+    <h1>Delete Category Form</h1>
+    <p>Are you sure you want to delete this category?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
+{% endblock %}
