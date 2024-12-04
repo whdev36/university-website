@@ -12,11 +12,13 @@ def home(request):
 @login_required
 def create_new(request):
     if request.method == 'POST':
-        form = NewForm(request.POST)
+        form = NewForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, 'New successfully created!')
-            return redirect('home') # Change to "news"
+            return redirect('news')
+        else:
+            messages.warning(request, '')
     else:
         form = NewForm()
     return render(request, 'create-new.html', {'form': form})
@@ -71,7 +73,7 @@ def categories(request):
 def update_category(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
-        form = CategoryForm(request.POST, instance=category)
+        form = CategoryForm(request.POST, request.FILES, instance=category)
         if form.is_valid():
             form.save()
             messages.success(request, 'The category has been updated successfully.')
@@ -90,3 +92,8 @@ def delete_category(request, pk):
         messages.success(request, 'The category has been successfully deleted.')
         return redirect('categories')
     return render(request, 'delete-category.html')
+
+# Create new details
+def new(request, pk):
+    new = get_object_or_404(New, pk=pk)
+    return render(request, 'new.html', {'new': new})

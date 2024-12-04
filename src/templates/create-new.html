@@ -4,9 +4,9 @@
 
 {% block content %}
     <h1>Create New Form</h1>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Create</button>
+        {{ form.as_div }}
+        <button class="btn btn-success" type="submit">Create</button>
     </form>
 {% endblock %}

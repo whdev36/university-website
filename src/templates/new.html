@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}New | {{ new.title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ new.title }}</h1>
+    <img src="{{ new.image.url }}" alt="">
+    <p>{{ new.content }}</p>
+{% endblock %}
