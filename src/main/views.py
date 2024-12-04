@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import NewForm, CategoryForm
@@ -55,7 +55,7 @@ def create_category(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'The category has been successfully created.')
-            return redirect('home') # TODO: Redirect to categories list
+            return redirect('categories')
         else:
             messages.warning(request, 'The category has been successfully created.')
     else:
@@ -67,3 +67,17 @@ def categories(request):
     categories = Category.objects.all()
     return render(request, 'categories.html', {'categories': categories})
 
+# Create category change view
+def update_category(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'The category has been updated successfully.')
+            return redirect('categories')
+        else:
+            messages.warning(request, 'Failed to update the category. Please try again.')
+    else:
+        form = CategoryForm(instance=category)
+    return render(request, 'update-category.html', {'form': form})

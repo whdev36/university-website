@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Category Form{% endblock %}
+
+{% block content %}
+    <h1>Update Category Form</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_div }}
+        <button class="btn btn-success" type="submit">Update</button>
+    </form>
+{% endblock %}
