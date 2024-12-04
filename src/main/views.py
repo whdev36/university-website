@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import NewForm, CategoryForm
-from .models import New
+from .models import New, Category
 
 # Homepage
 def home(request):
@@ -61,4 +61,9 @@ def create_category(request):
     else:
         form = CategoryForm()
     return render(request, 'create-category.html', {'form': form})
+
+# All categories list
+def categories(request):
+    categories = Category.objects.all()
+    return render(request, 'categories.html', {'categories': categories})
 

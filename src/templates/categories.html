@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Categories{% endblock %}
+
+{% block content %}
+    <h1>Categories</h1>
+    {% if categories %}
+        <div class="list-group">
+            {% for category in categories %}
+                <a class="list-group-item list-group-item-action" href="#">{{ category.name }}</a>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
