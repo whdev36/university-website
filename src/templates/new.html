@@ -4,6 +4,8 @@
 
 {% block content %}
     <h1>{{ new.title }}</h1>
-    <img src="{{ new.image.url }}" alt="">
+    {% if new.image %}
+        <img src="{{ new.image.url }}" alt="">
+    {% endif %}
     <p>{{ new.content }}</p>
 {% endblock %}
