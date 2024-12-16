@@ -4,27 +4,7 @@
     font-family: "Fredoka", sans-serif;
 }
 
-body {
-    background-color: #f8f9fa;
-    /* font-family: 'Arial', sans-serif; */
-}
-
-.navbar {
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.list-group-item {
-    transition: all 0.3s ease;
-}
-
-.list-group-item:hover {
-    background-color: #e9ecef;
-}
-
-.table-hover tbody tr:hover {
-    background-color: #f1f3f5;
-}
-
-.badge {
-    font-size: 0.9rem;
+th {
+    font-weight: 500;
+    text-transform: uppercase;
 }

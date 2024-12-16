@@ -35,8 +35,8 @@ def update_new(request, pk):
         form = NewForm(request.POST, instance=new)
         if form.is_valid():
             form.save()
-            # return redirect('new', pk=new.pk)
-            return redirect('news')
+            return redirect('new', pk=new.pk)
+            # return redirect('news')
     else:
         form = NewForm(instance=new)
     return render(request, 'update-new.html', {'form': form})
@@ -50,7 +50,7 @@ def delete_new(request, pk):
         return redirect('news')
     return render(request, 'delete-new.html', {'new': new})
 
-# Create category creation view for CategoryForm
+# Create category creation view for Category form
 def create_category(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
